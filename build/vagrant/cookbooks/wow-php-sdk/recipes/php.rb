@@ -1,4 +1,4 @@
-apt_package ['php5', 'php5-dev', 'php5-common', 'php5-intl', 'php-pear', 'php-apc', 'php5-xdebug'] do
+apt_package ['php5', 'php5-dev', 'php5-common', 'php5-intl', 'php-pear', 'php-apc', 'php5-xdebug', 'php5-curl'] do
   action :install
 end
 

@@ -1,0 +1,17 @@
+{
+  "name": "piteur/wow-php-sdk",
+  "description": "SDK to manage api call to World of Warcraft public API",
+  "version": "0.1",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": ">=5.3.3",
+    "guzzlehttp/guzzle": "~5"
+  },
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-0": {
+      "WowApi": "src"
+    }
+  }
+}
