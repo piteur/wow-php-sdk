@@ -10,8 +10,11 @@ use WowApi\Exception\UnknownOptionException;
  */
 class Config
 {
-    /** @var string current region name, set by the children */
-    protected $region = '';
+    /** @var string current region name */
+    private $region = '';
+
+    /** @var string current language */
+    private $language = '';
 
     /** Available regions */
     const US     = 'us';
@@ -21,7 +24,7 @@ class Config
     const CHINA  = 'cn';
 
     /** @var array Corresponding languages settings */
-    private $regions = array(
+    private $regionMapping = array(
         self::US     => array('en_US', 'es_MX', 'pt_BR'),
         self::EUROPE => array('en_GB', 'es_ES', 'fr_FR', 'ru_RU', 'de_DE', 'pt_PT', 'it_IT'),
         self::KOREA  => array('ko_KR'),
@@ -42,13 +45,20 @@ class Config
      * Construct the config, and optional region can be set
      *
      * @param string $region
+     * @param string $language
      *
      * @throws UnknownOptionException
      */
-    public function __construct($region = null)
+    public function __construct($region = null, $language = null)
     {
         if ($region !== null) {
             $this->setRegion($region);
+        }
+
+        $this->setLanguage($this->getDefaultLanguage());
+
+        if ($language !== null) {
+            $this->setLanguage($language);
         }
     }
 
@@ -61,11 +71,23 @@ class Config
      */
     public function getAvailableLanguages()
     {
-        if (!array_key_exists($this->region, $this->regions)) {
-            throw new UnknownOptionException(sprintf('Unsupported region %s', $this->region));
-        }
+        $this->validateRegion($this->region);
 
-        return $this->regions[$this->region];
+        return $this->regionMapping[$this->region];
+    }
+
+    /**
+     * Get the default language from the current configuration
+     *
+     * @return string
+     *
+     * @throws UnknownOptionException
+     */
+    public function getDefaultLanguage()
+    {
+        $this->validateRegion($this->region);
+
+        return $this->regionMapping[$this->region][0];
     }
 
     /**
@@ -77,11 +99,12 @@ class Config
      */
     public function getHostUrl()
     {
-        if (!array_key_exists($this->region, $this->regions)) {
-            throw new UnknownOptionException(sprintf('Unsupported region %s', $this->region));
-        }
+        $this->validateRegion($this->region);
 
-        return $this->hostMapping[$this->region];
+        return sprintf(
+            'http://%s/',
+            $this->hostMapping[$this->region]
+        );
     }
 
     /**
@@ -93,10 +116,48 @@ class Config
      */
     public function setRegion($region)
     {
-        if (!array_key_exists($region, $this->regions)) {
-            throw new UnknownOptionException(sprintf('Unsupported region %s', $region));
-        }
+        $this->validateRegion($region);
 
         $this->region = $region;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     *
+     * @throws UnknownOptionException
+     */
+    public function setLanguage($language)
+    {
+        if (!in_array($language, $this->getAvailableLanguages())) {
+            throw new UnknownOptionException(sprintf(
+                'Unsupported language %s for region %s',
+                $language,
+                $this->region
+            ));
+        }
+
+        $this->language = $language;
+    }
+
+    /**
+     * Validate the region input
+     *
+     * @param string $region
+     *
+     * @throws UnknownOptionException
+     */
+    private function validateRegion($region)
+    {
+        if (!array_key_exists($region, $this->regionMapping)) {
+            throw new UnknownOptionException(sprintf('Unsupported region %s', $region));
+        }
     }
 }
