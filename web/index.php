@@ -1,9 +1,21 @@
 <?php
+ini_set('display_errors', 1);
 require_once __DIR__.'/../vendor/autoload.php';
 
-echo 'This is the default & temporary empty test file';
-
-$config = new \WowApi\Config\Config('eu');
+try {
+    $config = new \WowApi\Config\Config('eu', 'fr_FR');
+} catch (\WowApi\Exception\UnknownOptionException $e) {
+    die($e->getMessage());
+}
 
 var_dump($config->getAvailableLanguages());
-var_dump($config->getHostUrl());
+
+$client = new WowApi\Client\Client($config);
+
+$battlegroups = $client->getDataResources()->getBattlegroups();
+
+if ($battlegroups->hasError()) {
+    die($battlegroups->getError());
+}
+
+var_dump($battlegroups->getBattlegroups());
