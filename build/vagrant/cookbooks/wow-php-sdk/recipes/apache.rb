@@ -13,3 +13,10 @@ template "/etc/apache2/sites-enabled/000-default" do
   group "root"
   mode "0644"
 end
+
+template "/etc/apache2/conf.d/charset" do
+  source "apache2.charset.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+end
