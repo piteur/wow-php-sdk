@@ -3,6 +3,7 @@ namespace WowApi\Client\ResponseHandler\DataResources;
 
 use WowApi\Client\ResponseHandler\ResponseHandler;
 use WowApi\Entity\DataResources\Battlegroups\Battlegroups;
+use WowApi\Entity\DataResources\CharacterClasses\CharacterClasses;
 use WowApi\Entity\DataResources\CharacterRaces\CharacterRaces;
 
 class DataResources extends ResponseHandler
@@ -21,5 +22,13 @@ class DataResources extends ResponseHandler
     public function getCharacterRaces()
     {
         return $this->handleRequest('data/character/races', new CharacterRaces());
+    }
+
+    /**
+     * @return CharacterClasses
+     */
+    public function getCharacterClasses()
+    {
+        return $this->handleRequest('data/character/classes', new CharacterClasses());
     }
 }

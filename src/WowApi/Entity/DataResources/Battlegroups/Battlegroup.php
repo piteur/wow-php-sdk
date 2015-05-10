@@ -10,10 +10,10 @@ class Battlegroup extends Entity implements EntityInterface
     protected $properties = ['name', 'slug'];
 
     /** @var string */
-    private $name;
+    protected $name;
 
     /** @var string */
-    private $slug;
+    protected $slug;
 
     /**
      * @return string
