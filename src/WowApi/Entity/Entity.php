@@ -38,12 +38,12 @@ class Entity implements EntityInterface
     }
 
     /**
-     * @param \stdClass $battlegroup
+     * @param \stdClass $entity
      */
-    public function setContent(\stdClass $battlegroup)
+    public function setContent(\stdClass $entity)
     {
         foreach ($this->properties as $property) {
-            $this->$property = $battlegroup->$property;
+            $this->$property = $entity->$property;
         }
     }
 }
