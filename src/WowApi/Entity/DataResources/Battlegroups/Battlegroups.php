@@ -1,10 +1,10 @@
 <?php
-namespace WowApi\RequestMapping\DataResources\Battlegroups;
+namespace WowApi\Entity\DataResources\Battlegroups;
 
-use WowApi\RequestMapping\MappingEntityInterface;
-use WowApi\RequestMapping\RequestMappingAbstract;
+use WowApi\Entity\Entity;
+use WowApi\Entity\EntityInterface;
 
-class Battlegroups extends RequestMappingAbstract implements MappingEntityInterface
+class Battlegroups extends Entity implements EntityInterface
 {
     /** @var array */
     private $battlegroups = array();
@@ -12,7 +12,7 @@ class Battlegroups extends RequestMappingAbstract implements MappingEntityInterf
     /**
      * @param \stdClass $content
      */
-    public function setContent($content)
+    public function setContent(\stdClass $content)
     {
         foreach ($content->battlegroups as $battlegroupContent) {
             /** @var \stdClass $battlegroupContent */

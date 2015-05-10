@@ -1,10 +1,22 @@
 <?php
 namespace WowApi\Client;
 
-use WowApi\Client\DataResources\DataResources;
+use WowApi\Config\Config;
+use WowApi\Client\ResponseHandler\DataResources\DataResources;
 
-class Client extends ClientAbstract
+class Client
 {
+    /** @var Config */
+    protected $config;
+
+    /**
+     * @param Config $config
+     */
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * @return DataResources
      */

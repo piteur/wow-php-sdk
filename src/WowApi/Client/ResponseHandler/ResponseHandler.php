@@ -1,16 +1,14 @@
 <?php
-namespace WowApi\Client;
+namespace WowApi\Client\ResponseHandler;
 
 use GuzzleHttp\Exception\ClientException;
 use WowApi\Config\Config;
 use GuzzleHttp\Client as GuzzleClient;
 use WowApi\Exception\NotFoundException;
-use WowApi\RequestMapping\MappingEntityInterface;
-use WowApi\RequestMapping\RequestMappingAbstract;
-use WowApi\RequestMapping\RequestMappingInterface;
-use WowApi\RequestMapping;
+use WowApi\Entity\EntityInterface;
+use WowApi\Entity;
 
-abstract class ResponseHandlerAbstract
+class ResponseHandler
 {
     /** @var Config */
     protected $config;
@@ -40,26 +38,14 @@ abstract class ResponseHandlerAbstract
     }
 
     /**
-     * @param string $endpoint
-     *
-     * @return $this
-     */
-    protected function setEndpoint($endpoint)
-    {
-        $this->endpoint = $endpoint;
-
-        return $this;
-    }
-
-    /**
      * Handle api request and generate the correct class output
      *
-     * @param string                $endpoint
-     * @param MappingEntityInterface $generatedClass
+     * @param string          $endpoint
+     * @param EntityInterface $generatedClass
      *
-     * @return RequestMappingInterface
+     * @return EntityInterface
      */
-    protected function handleRequest($endpoint, MappingEntityInterface $generatedClass)
+    protected function handleRequest($endpoint, EntityInterface $generatedClass)
     {
         try {
             $content = $this->getObject($endpoint);
@@ -79,10 +65,10 @@ abstract class ResponseHandlerAbstract
      * @throws NotFoundException
      * @throws ClientException
      */
-    protected function getObject($endpoint = null)
+    private function getObject($endpoint = null)
     {
         if ($endpoint !== null) {
-            $this->setEndpoint($endpoint);
+            $this->endpoint = $endpoint;
         }
 
         return $this->request();

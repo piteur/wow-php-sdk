@@ -1,10 +1,10 @@
 <?php
-namespace WowApi\RequestMapping\DataResources\CharacterRaces;
+namespace WowApi\Entity\DataResources\CharacterRaces;
 
-use WowApi\RequestMapping\MappingEntityInterface;
-use WowApi\RequestMapping\RequestMappingAbstract;
+use WowApi\Entity\Entity;
+use WowApi\Entity\EntityInterface;
 
-class CharacterRaces extends RequestMappingAbstract implements MappingEntityInterface
+class CharacterRaces extends Entity implements EntityInterface
 {
     /** @var array */
     private $characterRaces = array();
@@ -12,7 +12,7 @@ class CharacterRaces extends RequestMappingAbstract implements MappingEntityInte
     /**
      * @param \stdClass $content
      */
-    public function setContent($content)
+    public function setContent(\stdClass $content)
     {
         foreach ($content->races as $characterRaces) {
             /** @var \stdClass $characterRaces */

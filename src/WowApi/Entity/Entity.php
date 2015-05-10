@@ -1,7 +1,7 @@
 <?php
-namespace WowApi\RequestMapping;
+namespace WowApi\Entity;
 
-abstract class RequestMappingAbstract
+class Entity implements EntityInterface
 {
     /** @var array */
     protected $properties = [];
@@ -38,23 +38,12 @@ abstract class RequestMappingAbstract
     }
 
     /**
-     * @param \StdClass $battlegroup
-     *
-     * @return bool
+     * @param \stdClass $battlegroup
      */
-    public function validateInput($battlegroup)
+    public function setContent(\stdClass $battlegroup)
     {
-        foreach ($this->properties as $property)
-        {
-            if (!property_exists($battlegroup, $property)) {
-                $this->setError(sprintf(
-                    'Api response isn\'t in the expected format, missing property %s',
-                    $property
-                ));
-                break;
-            }
+        foreach ($this->properties as $property) {
+            $this->$property = $battlegroup->$property;
         }
-
-        return $this->hasError();
     }
 }

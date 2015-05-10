@@ -1,9 +1,10 @@
 <?php
-namespace WowApi\RequestMapping;
+namespace WowApi\Entity;
 
-interface MappingEntityInterface
+interface EntityInterface
 {
     public function hasError();
     public function setError();
     public function getError();
+    public function setContent(\stdClass $content);
 }

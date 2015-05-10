@@ -1,11 +1,11 @@
 <?php
-namespace WowApi\Client\DataResources;
+namespace WowApi\Client\ResponseHandler\DataResources;
 
-use WowApi\Client\ResponseHandlerAbstract;
-use WowApi\RequestMapping\DataResources\Battlegroups\Battlegroups;
-use WowApi\RequestMapping\DataResources\CharacterRaces\CharacterRaces;
+use WowApi\Client\ResponseHandler\ResponseHandler;
+use WowApi\Entity\DataResources\Battlegroups\Battlegroups;
+use WowApi\Entity\DataResources\CharacterRaces\CharacterRaces;
 
-class DataResources extends ResponseHandlerAbstract
+class DataResources extends ResponseHandler
 {
     /**
      * @return Battlegroups
