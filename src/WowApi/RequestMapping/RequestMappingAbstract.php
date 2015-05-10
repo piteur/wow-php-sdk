@@ -3,6 +3,9 @@ namespace WowApi\RequestMapping;
 
 abstract class RequestMappingAbstract
 {
+    /** @var array */
+    protected $properties = [];
+
     /** @var bool */
     private $error = false;
 
@@ -35,12 +38,23 @@ abstract class RequestMappingAbstract
     }
 
     /**
-     * @param \stdClass $input
+     * @param \StdClass $battlegroup
      *
      * @return bool
      */
-    protected function validateInput($input)
+    public function validateInput($battlegroup)
     {
-        return true;
+        foreach ($this->properties as $property)
+        {
+            if (!property_exists($battlegroup, $property)) {
+                $this->setError(sprintf(
+                    'Api response isn\'t in the expected format, missing property %s',
+                    $property
+                ));
+                break;
+            }
+        }
+
+        return $this->hasError();
     }
 }

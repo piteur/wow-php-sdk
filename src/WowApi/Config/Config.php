@@ -83,7 +83,7 @@ class Config
     public function getRequestUrl()
     {
         return sprintf(
-            'http://%s/api/wow/%%s/?locale=%s',
+            'http://%s/api/wow/%%s?locale=%s',
             $this->hostMapping[$this->region],
             $this->getLanguage()
         );

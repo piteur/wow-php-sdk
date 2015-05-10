@@ -6,6 +6,9 @@ use WowApi\RequestMapping\RequestMappingInterface;
 
 class Battlegroup extends RequestMappingAbstract implements RequestMappingInterface
 {
+    /** @var array */
+    protected $properties = ['name', 'slug'];
+
     /** @var string */
     private $name;
 
@@ -18,25 +21,9 @@ class Battlegroup extends RequestMappingAbstract implements RequestMappingInterf
     public function setContent(\stdClass $battlegroup)
     {
         if (!$this->validateInput($battlegroup)) {
-            $this->setName($battlegroup->name);
-            $this->setSlug($battlegroup->slug);
+            $this->name = $battlegroup->name;
+            $this->slug = $battlegroup->slug;
         }
-    }
-
-    /**
-     * @param \StdClass $battlegroup
-     *
-     * @return bool
-     */
-    public function validateInput($battlegroup)
-    {
-        if (!property_exists($battlegroup, 'name')
-            || !property_exists($battlegroup, 'slug')
-        ) {
-            $this->setError('Api response isn\'t in the expected format');
-        }
-
-        return $this->hasError();
     }
 
     /**
@@ -48,26 +35,10 @@ class Battlegroup extends RequestMappingAbstract implements RequestMappingInterf
     }
 
     /**
-     * @param string $name
-     */
-    protected function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
      * @return string
      */
     public function getSlug()
     {
         return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     */
-    protected function setSlug($slug)
-    {
-        $this->slug = $slug;
     }
 }

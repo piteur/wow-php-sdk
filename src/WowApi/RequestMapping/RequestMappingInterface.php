@@ -1,10 +1,7 @@
 <?php
 namespace WowApi\RequestMapping;
 
-interface RequestMappingInterface
+interface RequestMappingInterface extends MappingEntityInterface
 {
     public function setContent(\stdClass $input);
-    public function hasError();
-    public function setError();
-    public function getError();
 }

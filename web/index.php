@@ -12,10 +12,10 @@ var_dump($config->getAvailableLanguages());
 
 $client = new WowApi\Client\Client($config);
 
-$battlegroups = $client->getDataResources()->getBattlegroups();
+$characterRaces = $client->getDataResources()->getCharacterRaces();
 
-if ($battlegroups->hasError()) {
-    die($battlegroups->getError());
+if (false && $characterRaces->hasError()) {
+    die($characterRaces->getError());
 }
 
-var_dump($battlegroups->getBattlegroups());
+var_dump($characterRaces->getCharacterRaces());

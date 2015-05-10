@@ -3,6 +3,7 @@ namespace WowApi\Client\DataResources;
 
 use WowApi\Client\ResponseHandlerAbstract;
 use WowApi\RequestMapping\DataResources\Battlegroups\Battlegroups;
+use WowApi\RequestMapping\DataResources\CharacterRaces\CharacterRaces;
 
 class DataResources extends ResponseHandlerAbstract
 {
@@ -11,15 +12,14 @@ class DataResources extends ResponseHandlerAbstract
      */
     public function getBattlegroups()
     {
-        $battlegroups = new Battlegroups();
+        return $this->handleRequest('data/battlegroups/', new Battlegroups());
+    }
 
-        try {
-            $content = json_decode($this->getObject('data/battlegroups'));
-            $battlegroups->setContent($content);
-        } catch (\Exception $e) {
-            $battlegroups->setError($e->getMessage());
-        }
-
-        return $battlegroups;
+    /**
+     * @return CharacterRaces
+     */
+    public function getCharacterRaces()
+    {
+        return $this->handleRequest('data/character/races', new CharacterRaces());
     }
 }

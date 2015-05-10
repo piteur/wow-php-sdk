@@ -1,9 +1,10 @@
 <?php
 namespace WowApi\RequestMapping\DataResources\Battlegroups;
 
+use WowApi\RequestMapping\MappingEntityInterface;
 use WowApi\RequestMapping\RequestMappingAbstract;
 
-class Battlegroups extends RequestMappingAbstract
+class Battlegroups extends RequestMappingAbstract implements MappingEntityInterface
 {
     /** @var array */
     private $battlegroups = array();
@@ -28,13 +29,5 @@ class Battlegroups extends RequestMappingAbstract
     public function getBattlegroups()
     {
         return $this->battlegroups;
-    }
-
-    /**
-     * @param array $battlegroups
-     */
-    public function setBattlegroups($battlegroups)
-    {
-        $this->battlegroups = $battlegroups;
     }
 }
