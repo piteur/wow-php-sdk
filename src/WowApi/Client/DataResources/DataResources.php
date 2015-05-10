@@ -1,10 +1,10 @@
 <?php
 namespace WowApi\Client\DataResources;
 
-use WowApi\Client\ResourceAbstract;
+use WowApi\Client\ResponseHandlerAbstract;
 use WowApi\RequestMapping\DataResources\Battlegroups\Battlegroups;
 
-class DataResources extends ResourceAbstract
+class DataResources extends ResponseHandlerAbstract
 {
     /**
      * @return Battlegroups

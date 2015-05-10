@@ -6,7 +6,7 @@ use WowApi\Config\Config;
 use GuzzleHttp\Client as GuzzleClient;
 use WowApi\Exception\NotFoundException;
 
-abstract class ResourceAbstract
+abstract class ResponseHandlerAbstract
 {
     /** @var Config */
     protected $config;
