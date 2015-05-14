@@ -4,9 +4,8 @@ namespace WowApi\Client\ResponseHandler;
 use GuzzleHttp\Exception\ClientException;
 use WowApi\Config\Config;
 use GuzzleHttp\Client as GuzzleClient;
+use WowApi\Entity\Entity;
 use WowApi\Exception\NotFoundException;
-use WowApi\Entity\EntityInterface;
-use WowApi\Entity;
 
 class ResponseHandler
 {
@@ -40,12 +39,12 @@ class ResponseHandler
     /**
      * Handle api request and generate the correct class output
      *
-     * @param string          $endpoint
-     * @param EntityInterface $generatedClass
+     * @param string $endpoint
+     * @param Entity $generatedClass
      *
-     * @return EntityInterface
+     * @return Entity
      */
-    protected function handleRequest($endpoint, EntityInterface $generatedClass)
+    protected function handleRequest($endpoint, Entity $generatedClass)
     {
         try {
             $content = $this->getObject($endpoint);
@@ -88,7 +87,12 @@ class ResponseHandler
             $client = new GuzzleClient();
 
             $response = $client->get($this->getRequestUrl());
-            $content = $response->getBody()->read($response->getHeader('content-length'));
+
+            if ($response->hasHeader('content-length')) {
+                return json_decode($response->getBody()->read($response->getHeader('content-length')));
+            }
+
+            return json_decode($response->getBody()->getContents());
         } catch (ClientException $e) {
             if ($e->getResponse()->getStatusCode() === 404) {
                 throw new NotFoundException('unknown api endpoint');
@@ -96,7 +100,5 @@ class ResponseHandler
 
             throw $e;
         }
-
-        return json_decode($content);
     }
 }

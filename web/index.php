@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', 1);
 require_once __DIR__.'/../vendor/autoload.php';
 
 try {
@@ -12,10 +11,11 @@ var_dump($config->getAvailableLanguages());
 
 $client = new WowApi\Client\Client($config);
 
-$entity = $client->getDataResources()->getCharacterClasses();
+$entity = $client->getDataResources()->getCharacterAchievements();
 
 if ($entity->hasError()) {
     die($entity->getError());
 }
 
-var_dump($entity);
+
+var_dump($entity->getAchievement(4896));
