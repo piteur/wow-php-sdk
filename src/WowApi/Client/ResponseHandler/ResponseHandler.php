@@ -44,7 +44,7 @@ class ResponseHandler
      *
      * @return Entity
      */
-    protected function handleRequest($endpoint, Entity $generatedClass)
+    public function handleRequest($endpoint, Entity $generatedClass)
     {
         try {
             $content = $this->getObject($endpoint);

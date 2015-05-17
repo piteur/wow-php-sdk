@@ -1,8 +1,13 @@
 <?php
 namespace WowApi\Entity;
 
+use WowApi\Client\ResponseHandler\ResponseHandler;
+
 class Entity implements EntityInterface
 {
+    /** @var ResponseHandler */
+    protected $responseHandler;
+
     /** @var array */
     protected $properties = [];
 
@@ -11,6 +16,16 @@ class Entity implements EntityInterface
 
     /** @var string */
     private $errorMessage = '';
+
+    /**
+     * @param ResponseHandler $responseHandler
+     */
+    public function __construct(ResponseHandler $responseHandler = null)
+    {
+        if ($responseHandler !== null) {
+            $this->responseHandler = $responseHandler;
+        }
+    }
 
     /**
      * @return boolean

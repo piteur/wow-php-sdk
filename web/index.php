@@ -11,11 +11,17 @@ var_dump($config->getAvailableLanguages());
 
 $client = new WowApi\Client\Client($config);
 
-$entity = $client->getDataResources()->getCharacterAchievements();
+$entity = $client->getItem()->getItem(110050); // 'dungeon-level-up-1'
 
 if ($entity->hasError()) {
     die($entity->getError());
 }
 
+if ($entity->isItemContainer()) {
+    var_dump($entity->getItemContainer());
+    var_dump($entity->getItemContainer()->getItem('dungeon-level-up-1'));
+}
 
-var_dump($entity->getAchievement(4896));
+if ($entity->isItem()) {
+    var_dump($entity->getItem());
+}
