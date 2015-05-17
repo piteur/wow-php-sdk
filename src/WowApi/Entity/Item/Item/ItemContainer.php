@@ -21,18 +21,18 @@ class ItemContainer extends Entity implements EntityInterface
     {
         // we have a legacy item
         if (property_exists($content, 'name')) {
-            $item = new Item();
-            $item->setContent($content);
-
-            $this->item = $item;
+            $this->item = $this->entityFactory(
+                'WowApi\Entity\Item\Item\Legacy\Item',
+                $content
+            );
             return;
         }
 
         // we have a fake item
-        $itemContainer = new Container($this->responseHandler);
-        $itemContainer->setContent($content);
-
-        $this->itemContainer = $itemContainer;
+        $this->itemContainer = $this->entityFactory(
+            'WowApi\Entity\Item\Item\Container\Container',
+            $content
+        );
     }
 
     /**

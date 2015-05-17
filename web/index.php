@@ -7,8 +7,6 @@ try {
     die($e->getMessage());
 }
 
-var_dump($config->getAvailableLanguages());
-
 $client = new WowApi\Client\Client($config);
 
 $entity = $client->getItem()->getItem(110050); // 'dungeon-level-up-1'

@@ -24,9 +24,9 @@ class WeaponInfo extends Entity implements EntityInterface
     {
         parent::setContent($content);
 
-        $damage = new Damage();
-        $damage->setContent($content->damage);
-
-        $this->damage = $damage;
+        $this->damage = $this->entityFactory(
+            'WowApi\Entity\Item\Item\Legacy\WeaponInfo\Damage',
+            $content->damage
+        );
     }
 }

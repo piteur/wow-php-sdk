@@ -46,6 +46,9 @@ class ResponseHandler
      */
     public function handleRequest($endpoint, Entity $generatedClass)
     {
+        // inject the response handler to lazy load others endpoints
+        $generatedClass->setResponseHandler($this);
+
         try {
             $content = $this->getObject($endpoint);
             $generatedClass->setContent($content);

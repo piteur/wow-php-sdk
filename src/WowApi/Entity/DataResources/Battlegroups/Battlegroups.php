@@ -15,11 +15,10 @@ class Battlegroups extends Entity implements EntityInterface
     public function setContent(\stdClass $content)
     {
         foreach ($content->battlegroups as $battlegroupContent) {
-            /** @var \stdClass $battlegroupContent */
-            $battlegroup = new Battlegroup();
-            $battlegroup->setContent($battlegroupContent);
-
-            $this->battlegroups[] = $battlegroup;
+            $this->battlegroups[] = $this->entityFactory(
+                'WowApi\Entity\DataResources\Battlegroups\Battlegroup',
+                $battlegroupContent
+            );
         }
     }
 

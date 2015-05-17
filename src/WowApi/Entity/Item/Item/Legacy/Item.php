@@ -132,27 +132,25 @@ class Item extends Entity implements EntityInterface
     {
         parent::setContent($content);
 
+        $this->itemSource = $this->entityFactory(
+            'WowApi\Entity\Item\Item\Legacy\ItemSource',
+            $content->itemSource
+        );
+
+        $this->weaponInfo = $this->entityFactory(
+            'WowApi\Entity\Item\Item\Legacy\WeaponInfo\WeaponInfo',
+            $content->weaponInfo
+        );
+
         // manage bonus stats
         if (count($content->bonusStats) >= 1) {
             foreach ($content->bonusStats as $bonus) {
-                $bonusStat = new BonusStat();
-                $bonusStat->setContent($bonus);
-
-                $this->bonusStats[] = $bonusStat;
+                $this->bonusStats[] = $this->entityFactory(
+                    'WowApi\Entity\Item\Item\Legacy\BonusStat',
+                    $bonus
+                );;
             }
         }
-
-        // manage item source
-        $itemSource = new ItemSource();
-        $itemSource->setContent($content->itemSource);
-
-        $this->itemSource = $itemSource;
-
-        // manage weapon info
-        $weaponInfo = new WeaponInfo();
-        $weaponInfo->setContent($content->weaponInfo);
-
-        $this->weaponInfo = $weaponInfo;
     }
 
     /**

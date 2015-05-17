@@ -15,16 +15,31 @@ class Entity implements EntityInterface
     private $error = false;
 
     /** @var string */
-    private $errorMessage = '';
+    private $errorMessage;
 
     /**
      * @param ResponseHandler $responseHandler
      */
-    public function __construct(ResponseHandler $responseHandler = null)
+    public function setResponseHandler(ResponseHandler $responseHandler)
     {
-        if ($responseHandler !== null) {
-            $this->responseHandler = $responseHandler;
-        }
+        $this->responseHandler = $responseHandler;
+    }
+
+    /**
+     * @param string    $class
+     * @param \stdClass $content
+     *
+     * @return Entity
+     */
+    protected function entityFactory($class, \stdClass $content)
+    {
+        /** @var Entity $entity */
+        $entity = new $class();
+        $entity->setResponseHandler($this->responseHandler);
+
+        $entity->setContent($content);
+
+        return $entity;
     }
 
     /**

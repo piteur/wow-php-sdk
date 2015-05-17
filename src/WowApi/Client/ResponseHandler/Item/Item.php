@@ -22,7 +22,7 @@ class Item extends ResponseHandler
 
         return $this->handleRequest(
             $request,
-            new ItemContainer($this)
+            new ItemContainer()
         );
     }
 }

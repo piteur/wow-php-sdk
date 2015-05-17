@@ -15,11 +15,10 @@ class CharacterClasses extends Entity implements EntityInterface
     public function setContent(\stdClass $content)
     {
         foreach ($content->classes as $characterClasses) {
-            /** @var \stdClass $characterClasses */
-            $characterClass = new CharacterClass();
-            $characterClass->setContent($characterClasses);
-
-            $this->characterClasses[] = $characterClass;
+            $this->characterClasses[] = $this->entityFactory(
+                'WowApi\Entity\DataResources\CharacterClasses\CharacterClass',
+                $characterClasses
+            );
         }
     }
 
