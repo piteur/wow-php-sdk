@@ -10,10 +10,10 @@ try {
 
 $client = new WowApi\Client\Client($config);
 
-$entity = $client->getDataResources()->getCharacter()->getAchievements();
+$entity = $client->getDataResources()->getGuild()->getRewards();
 
 if ($entity->hasError()) {
     die($entity->getError());
 }
 
-var_dump($entity->getAchievement(6));
+var_dump($entity->getRewards()[0]);

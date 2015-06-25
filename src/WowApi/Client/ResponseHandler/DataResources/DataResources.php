@@ -2,11 +2,20 @@
 namespace WowApi\Client\ResponseHandler\DataResources;
 
 use WowApi\Client\ResponseHandler\DataResources\Character\Character;
+use WowApi\Client\ResponseHandler\DataResources\Guild\Guild;
 use WowApi\Client\ResponseHandler\ResponseHandler;
 use WowApi\Entity\DataResources\Battlegroups\Battlegroups;
 
 class DataResources extends ResponseHandler
 {
+    /**
+     * @return Battlegroups
+     */
+    public function getBattlegroups()
+    {
+        return $this->handleRequest('data/battlegroups/', new Battlegroups());
+    }
+
     /**
      * @return Character
      */
@@ -16,10 +25,10 @@ class DataResources extends ResponseHandler
     }
 
     /**
-     * @return Battlegroups
+     * @return Guild
      */
-    public function getBattlegroups()
+    public function getGuild()
     {
-        return $this->handleRequest('data/battlegroups/', new Battlegroups());
+        return new Guild($this->config);
     }
 }

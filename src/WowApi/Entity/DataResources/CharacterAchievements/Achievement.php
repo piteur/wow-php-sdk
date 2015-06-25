@@ -47,7 +47,7 @@ class Achievement extends Entity implements EntityInterface
      * @param \stdClass $entity
      * @param array     $achievementList
      */
-    public function setContent(\stdClass $entity, array &$achievementList)
+    public function setContent(\stdClass $entity, array &$achievementList = [])
     {
         parent::setContent($entity);
 

@@ -137,10 +137,12 @@ class Item extends Entity implements EntityInterface
             $content->itemSource
         );
 
-        $this->weaponInfo = $this->entityFactory(
-            'WowApi\Entity\Item\Item\Legacy\WeaponInfo\WeaponInfo',
-            $content->weaponInfo
-        );
+        if (property_exists($content, 'weaponInfo')) {
+            $this->weaponInfo = $this->entityFactory(
+                'WowApi\Entity\Item\Item\Legacy\WeaponInfo\WeaponInfo',
+                $content->weaponInfo
+            );
+        }
 
         // manage bonus stats
         if (count($content->bonusStats) >= 1) {

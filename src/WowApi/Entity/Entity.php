@@ -73,7 +73,9 @@ class Entity implements EntityInterface
     public function setContent(\stdClass $entity)
     {
         foreach ($this->properties as $property) {
-            $this->$property = $entity->$property;
+            if (property_exists($entity, $property)) {
+                $this->$property = $entity->$property;
+            }
         }
     }
 }
