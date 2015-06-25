@@ -6,12 +6,15 @@ use WowApi\Entity\EntityInterface;
 
 class AchievementContainer extends Entity implements EntityInterface
 {
-    /** @var array Will contain the full list of the achievements, without dealing with categories */
+    /** @var Achievements[] Will contain the full list of the achievements, without dealing with categories */
     protected $achievementList = array();
 
     /** @var Achievements[] */
     protected $achievements = array();
 
+    /**
+     * @param \stdClass $content
+     */
     public function setContent(\stdClass $content)
     {
         foreach ($content->achievements as $achievementList) {
@@ -37,10 +40,20 @@ class AchievementContainer extends Entity implements EntityInterface
      */
     public function getAchievement($achievementId)
     {
-        if (array_key_exists($achievementId, $this->achievementList)) {
+        if ($this->hasAchievement($achievementId)) {
             return $this->achievementList[$achievementId];
         }
 
         return null;
+    }
+
+    /**
+     * @param int $achievementId
+     *
+     * @return bool
+     */
+    public function hasAchievement($achievementId)
+    {
+        return array_key_exists($achievementId, $this->achievementList);
     }
 }

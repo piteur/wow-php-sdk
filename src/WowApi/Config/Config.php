@@ -11,6 +11,9 @@ class Config
     /** @var string current language */
     private $language = '';
 
+    /** @var string api key */
+    private $apiKey = '';
+
     /** Available regions */
     const US     = 'us';
     const EUROPE = 'eu';
@@ -19,7 +22,7 @@ class Config
     const CHINA  = 'cn';
 
     /** @var array Corresponding languages settings */
-    private $regionMapping = [
+    private $languagesMapping = [
         self::US     => ['en_US', 'es_MX', 'pt_BR'],
         self::EUROPE => ['en_GB', 'es_ES', 'fr_FR', 'ru_RU', 'de_DE', 'pt_PT', 'it_IT'],
         self::KOREA  => ['ko_KR'],
@@ -29,11 +32,11 @@ class Config
 
     /** @var array Mapping of the host according to the region */
     private $hostMapping = [
-        self::US     => 'us.battle.net',
-        self::EUROPE => 'eu.battle.net',
-        self::KOREA  => 'kr.battle.net',
-        self::TAIWAN => 'tw.battle.net',
-        self::CHINA  => 'www.battlenet.com.cn',
+        self::US     => 'us.api.battle.net',
+        self::EUROPE => 'eu.api.battle.net',
+        self::KOREA  => 'kr.api.battle.net',
+        self::TAIWAN => 'tw.api.battle.net',
+        self::CHINA  => 'sea.api.battle.net',
     ];
 
     /**
@@ -62,7 +65,7 @@ class Config
      */
     public function getAvailableLanguages()
     {
-        return $this->regionMapping[$this->region];
+        return $this->languagesMapping[$this->region];
     }
 
     /**
@@ -72,7 +75,15 @@ class Config
      */
     public function getDefaultLanguage()
     {
-        return $this->regionMapping[$this->region][0];
+        return $this->languagesMapping[$this->region][0];
+    }
+
+    /**
+     * @param string $apiKey
+     */
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
     }
 
     /**
@@ -83,9 +94,10 @@ class Config
     public function getRequestUrl()
     {
         return sprintf(
-            'http://%s/api/wow/%%s?locale=%s',
+            'https://%s/wow/%%s?locale=%s&apikey=%s',
             $this->hostMapping[$this->region],
-            $this->getLanguage()
+            $this->getLanguage(),
+            $this->apiKey
         );
     }
 
@@ -98,7 +110,7 @@ class Config
      */
     public function setRegion($region)
     {
-        if (!array_key_exists($region, $this->regionMapping)) {
+        if (!array_key_exists($region, $this->languagesMapping)) {
             throw new UnknownOptionException(sprintf('Unsupported region %s', $region));
         }
 
